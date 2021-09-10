@@ -44,9 +44,7 @@ public class QuoteService {
                 .symbol(Symbol.builder().id(result.symbol).name(result.shortName).build()).build();
     }
 
-    public Quote addQuoteBySymbolId(String symbolId){
-
-        Quote quote = getStockById(symbolId);
+    public Quote addQuote(Quote quote){
         symbolRepository.save(quote.getSymbol());
         return quoteRepository.save(quote);
     }

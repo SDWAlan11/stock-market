@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 export function FormDialog() {
 
   const [open, setOpen] = useState(false);
+  const [stock, setStock] = useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,10 +33,15 @@ export function FormDialog() {
     setOpen(false);
   };
 
-  function updatePost() {    
+  const handleChange = (event) => {
+    setStock({value: event.target.value});
+  }
+
+
+  const updatePost = () => {    
         console.log(this);
         axios.post(process.env.REACT_APP_API_ROOT_URL + '/v1/stocks/' , {
-          id:'T',
+          id:stock.value,
         })
         .then(res => {
           handleClose();
@@ -43,7 +49,8 @@ export function FormDialog() {
             console.log('Error Adding Stock' + error);
             handleClose();
           });
-  }
+  };
+
 
   return (
     <div>
@@ -61,14 +68,16 @@ export function FormDialog() {
             label="Symbol"
             type="text"
             variant="outlined"
+            onChange={handleChange}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={updatePost(this)} color="primary">
+          <Button onClick={updatePost} color="primary">
             Add
           </Button>
         </DialogActions>
       </Dialog>
+
     </div>
   );
 }

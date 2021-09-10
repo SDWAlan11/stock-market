@@ -14,7 +14,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
-@JsonIgnoreProperties(value = { "symbol" })
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Quote extends Audit{
 
@@ -24,7 +23,6 @@ public class Quote extends Audit{
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
-    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="symbolId",referencedColumnName = "id")
     private Symbol symbol;

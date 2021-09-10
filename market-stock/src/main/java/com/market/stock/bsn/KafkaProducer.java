@@ -22,7 +22,7 @@ public class KafkaProducer {
 
     public void sendMessage(Object message) {
 
-        ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(this.topic, message);
+        ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(this.topic,"hey", message);
         future.addCallback(new ListenableFutureCallback<>() {
             @Override
             public void onSuccess(SendResult<String, Object> result) {

@@ -22,13 +22,14 @@ public class StockAspect {
 
     @AfterReturning(pointcut="execution(* com.market.stock.bsn.StockService.getStock*(..))", returning="stocksDto")
     public void afterReturningAdvice(List<StockDto> stocksDto){
-        stocksDto.parallelStream().forEach(stockDto -> afterReturningAdvice(stockDto));
+        stocksDto.parallelStream().forEach(this::afterReturningAdvice);
     }
 
     @AfterReturning(pointcut="execution(* com.market.stock.bsn.StockService.*Stock*(..))", returning="stockDto")
     public void afterReturningAdvice(StockDto stockDto){
-        Quote quoteCreated = quoteService.addQuoteBySymbolId(stockDto.getSymbol().getId());
-        kafkaProducer.sendMessage(quoteCreated);
+        Quote quote = quoteService.getStockById(stockDto.getSymbol().getId());
+        System.out.println("Message to send " + quote);
+        kafkaProducer.sendMessage(quote);
     }
 
     @AfterThrowing(pointcut="execution(* com.market.stock.bsn.StockService.*Stock*(..))", throwing="ex")
