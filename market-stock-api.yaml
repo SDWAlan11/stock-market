@@ -1,0 +1,173 @@
+openapi: 3.0.1
+info:
+  title: Stocks
+  description: defaultDescription
+  version: '0.1'
+servers:
+  - url: http://localhost:8080/v1
+paths:
+  /quotes/{stock}:
+    get:
+      description: Auto generated using Swagger Inspector
+      tags:
+        - Quotes
+      parameters:
+        - in: path
+          name: stock
+          schema:
+            type: string
+          required: true
+          description: Stock Id
+      responses:
+        '200':
+          description: Quote from a symbol returned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  symbol:
+                    type: Symbol
+                    $ref: '#/components/schemas/Symbol'
+                  ask:
+                    type: number
+                  currency:
+                    type: string
+                    enum: ["USD", "MXN"]
+                  id:
+                    type: integer
+                  bid:
+                    type: number
+                  createdOn: {}
+                  regularMarketPrice:
+                    type: number
+              examples:
+                '0':
+                  value: >-
+                    {"id":0,"symbol":{"id":"AAL","name":"American
+                    Airlines Group,
+                    Inc."},"regularMarketPrice":20.64,"ask":20.57,"bid":20.56,"currency":"USD","createdOn":null}
+  /stocks/{stock}:
+    get:
+      description: Auto generated using Swagger Inspector
+      tags:
+        - Stocks
+      parameters:
+        - in: path
+          name: stock
+          schema:
+            type: string
+          required: true
+          description: Stock Id  
+      responses:
+        '200':
+          description: Quote from a symbol returned
+          content:
+            application/json:
+              examples:
+                '0':
+                  value: >-
+                      {
+                        "id": "AAL",
+                        "name": "American Airlines Group, Inc.",
+                        "statics": {
+                          "lastPrice": 20.52,
+                          "quantity": 0,
+                          "ppp": 0,
+                          "gain": 0
+                        }
+                      }    
+  /stocks/{stock}/orders:
+    get:
+      description: Auto generated using Swagger Inspector
+      tags:
+        - Stocks
+      parameters:
+        - in: path
+          name: stock
+          schema:
+            type: string
+          required: true
+          description: Stock Id  
+      responses:
+        '200':
+          description: Quote from a symbol returned
+  /stocks/{stock}/statics:
+    get:
+      description: Auto generated using Swagger Inspector
+      tags:
+        - Stocks
+      parameters:
+        - in: path
+          name: stock
+          schema:
+            type: string
+          required: true
+          description: Stock Id  
+      responses:
+        '200':
+          description: Quote from a symbol returned
+          content:
+            application/json:
+              examples:
+                '0':
+                  value: >-
+                      {
+                        "lastPrice": 20.52,
+                        "quantity": 0,
+                        "ppp": 0,
+                        "gain": 0
+                      }
+  /stocks:
+    get:
+      description: Auto generated using Swagger Inspector
+      tags:
+        - Stocks
+      responses:
+        '200':
+          description: Quote from a symbol returned
+          content:
+            application/json:
+              examples:
+                '0':
+                  value: >-
+                    [
+                      {
+                        "id": "AAL",
+                        "name": "American Airlines Group, Inc.",
+                        "statics": {
+                          "lastPrice": 20.52,
+                          "quantity": 0,
+                          "ppp": 0,
+                          "gain": 0
+                        }
+                      }
+                    ]
+    post:
+      description: Auto generated using Swagger Inspector
+      tags:
+        - Stocks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: Symbol
+              $ref: '#/components/schemas/Symbol'
+      responses:
+        '200':
+          description: Stock created
+components:
+  schemas:
+    Symbol:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    Stock:
+      type: object
+      properties:
+        symbol:
+          type: Symbol
+          $ref: '#/components/schemas/Symbol'

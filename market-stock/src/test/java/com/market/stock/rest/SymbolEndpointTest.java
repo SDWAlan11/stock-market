@@ -1,5 +1,6 @@
 package com.market.stock.rest;
 
+import com.market.stock.bsn.QuoteService;
 import com.market.stock.bsn.StockService;
 import com.market.stock.bsn.dto.StockDto;
 import com.market.stock.data.entity.Symbol;
@@ -27,6 +28,9 @@ public class SymbolEndpointTest {
 
     @MockBean
     private StockService stockService;
+
+    @MockBean
+    private QuoteService quoteService;
 
 
     @Test

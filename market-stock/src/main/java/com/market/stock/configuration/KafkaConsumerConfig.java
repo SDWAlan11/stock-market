@@ -19,6 +19,9 @@ public class KafkaConsumerConfig {
     @Value(value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
+    @Value(value = "${spring.kafka.consumer.group-id}")
+    private String groupId;
+
     public ConsumerFactory<String, Object> consumerFactory(String groupId) {
         Map<String, Object> props = new HashMap<>();
         JsonDeserializer<Object> deserializer = new JsonDeserializer<>(Object.class);
@@ -33,7 +36,7 @@ public class KafkaConsumerConfig {
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, Object> headersKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory("headers"));
+        factory.setConsumerFactory(consumerFactory(groupId));
         return factory;
     }
 }
